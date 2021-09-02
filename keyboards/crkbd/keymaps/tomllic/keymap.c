@@ -27,7 +27,7 @@ extern keymap_config_t keymap_config;
 extern rgblight_config_t rgblight_config;
 #endif
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 static uint32_t oled_timer = 0;
 #endif
 
@@ -213,7 +213,7 @@ void matrix_init_user(void) {
     #endif
 }
 
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) { return OLED_ROTATION_270; }
 
 void render_space(void) {
@@ -412,25 +412,40 @@ void suspend_power_down_user() {
 }
 
 void oled_task_user(void) {
-    if (timer_elapsed32(oled_timer) > 30000) {
-        oled_off();
-        return;
-    }
-#ifndef SPLIT_KEYBOARD
-    else { oled_on(); }
-#endif
-
     if (is_keyboard_master()) {
-        render_status_main();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
-    } else {
-        render_status_secondary();
+        if (timer_elapsed32(oled_timer) > 30000) {
+            oled_off();
+            return;
+        } else {
+            oled_on();
+        }
     }
+    // oled rendering code
 }
+//#endif
+//
+//void oled_task_user(void) {
+//    if (timer_elapsed32(oled_timer) > 30000) {
+//        oled_off();
+//        return;
+//    }
+//#ifndef SPLIT_KEYBOARD
+//    else { oled_on(); }
+//#endif
+//
+//   if (is_keyboard_master()) {
+//       render_status_main();  // Renders the current keyboard state (layer, lock, caps, scroll, etc)
+//   } else {
+//       render_status_secondary();
+//    }
+//}
+//#endif
 
-#endif
+
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
-#ifdef OLED_DRIVER_ENABLE
+#ifdef OLED_ENABLE
         oled_timer = timer_read32();
 #endif
     // set_timelog();
@@ -448,7 +463,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
   return true;
 }
-//#endif // OLED_DRIVER_ENABLE
+//#endif // OLED_ENABLE
 
 void rgb_matrix_indicators_user(void) {
     rgb_matrix_set_color(13, 255, 0, 0); //layer switch left
