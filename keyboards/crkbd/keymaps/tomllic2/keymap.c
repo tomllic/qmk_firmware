@@ -21,6 +21,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 enum custom_keycodes {
     COMM = SAFE_RANGE,
+	SELECT,
+	FROM,
+	JOIN,
+	WHERE,
+	GROUP,
+	HAVING,
+	LIMIT
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,7 +62,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_LBRC,    COMM, KC_MINUS,KC_COMMA,  KC_DOT, KC_RBRC,                      KC_HOME, KC_LEFT, KC_DOWN,   KC_UP,KC_RIGHT,  KC_END,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-LCTL(KC_BSLS), KC_QUOT,XXXXXXX, KC_EQL, LCTL(KC_DOT), KC_TILD,                    XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, XXXXXXX, XXXXXXX,
+LCTL(KC_BSLS), KC_QUOT,XXXXXXX, KC_EQL, LCTL(KC_DOT), KC_TILD,                    XXXXXXX, XXXXXXX, KC_COMM,  KC_DOT, MO(4), XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           KC_DEL,   MO(3),  KC_SPC,   KC_ENT, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
@@ -70,6 +77,18 @@ LCTL(KC_BSLS), KC_QUOT,XXXXXXX, KC_EQL, LCTL(KC_DOT), KC_TILD,                  
       RGB_MOD, RGB_HUD, RGB_SAD, RGB_VAD, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           XXXXXXX, _______,  KC_SPC,     KC_ENT, _______, XXXXXXX
+                                      //`--------------------------'  `--------------------------'
+  ),
+	  
+	    [4] = LAYOUT_split_3x6_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      XXXXXXX, XXXXXXX, WHERE,     FROM, XXXXXXX, GROUP,                      JOIN,  LIMIT, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, SELECT, XXXXXXX, XXXXXXX,                      HAVING, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, XXXXXXX,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          XXXXXXX, XXXXXXX, XXXXXXX,     XXXXXXX, _______, XXXXXXX
                                       //`--------------------------'  `--------------------------'
   )
 };
@@ -174,6 +193,81 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   if (record->event.pressed) {
     set_keylog(keycode, record);
   }
+	
+
+   switch (keycode) {
+    case COMM:
+        if (record->event.pressed) {
+            // when keycode COMM is pressed
+            SEND_STRING("--");
+        } else {
+            // when keycode COMM is released
+        }
+        break;
+		   
+		       case SELECT:
+        if (record->event.pressed) {
+            // when keycode SELECT is pressed
+            SEND_STRING("DKUKCF * ");
+        } else {
+            // when keycode SELECT is released
+        }
+        break;
+		   
+		       case JOIN:
+        if (record->event.pressed) {
+            // when keycode JOIN is pressed
+            SEND_STRING("Y:LJ ");
+        } else {
+            // when keycode JOIN is released
+        }
+        break;
+		   
+		       case FROM:
+        if (record->event.pressed) {
+            // when keycode FROM is pressed
+            SEND_STRING("ES:M ");
+        } else {
+            // when keycode FROM is released
+        }
+        break;
+		   
+		       case WHERE:
+        if (record->event.pressed) {
+            // when keycode WHERE is pressed
+            SEND_STRING("WHKSK 1=1 \n AJG ");
+        } else {
+            // when keycode WHERE is released
+        }
+        break;
+		   
+		       case GROUP:
+        if (record->event.pressed) {
+            // when keycode GROUP is pressed
+            SEND_STRING("TS:IR BO ");
+        } else {
+            // when keycode GROUP is released
+        }
+        break;
+		   
+		       case HAVING:
+        if (record->event.pressed) {
+            // when keycode HAVUKD is pressed
+            SEND_STRING("HAVLJT ");
+        } else {
+            // when keycode HAVING is released
+        }
+        break;
+		       case LIMIT:
+        if (record->event.pressed) {
+            // when keycode LIMIT is pressed
+            SEND_STRING("ULMLF 1000p");
+        } else {
+            // when keycode LIMIT is released
+        }
+        break;
+    }
+	
   return true;
-}
+};
 #endif // OLED_ENABLE
