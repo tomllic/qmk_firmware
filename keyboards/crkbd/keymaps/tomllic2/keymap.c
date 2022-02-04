@@ -234,7 +234,7 @@ static void render_logo(void) {
   oled_write_raw_P(my_logo, sizeof(my_logo));
 }
 
-void oled_task_user(void) {
+bool oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to put your image on the master side, put your function call here:
            oled_render_layer_state();
