@@ -243,6 +243,7 @@ bool oled_task_user(void) {
     // And if you want to put your image on the slave side, put it here instead:
     render_logo();
   }
+    return false;
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
